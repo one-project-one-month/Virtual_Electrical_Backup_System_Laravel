@@ -1,15 +1,15 @@
 <?php
 namespace App\Services\Test;
 
-use App\Repositories\Test\TestCategoryRepository;
+use App\Models\Test\TestCategory;
+use App\Services\CommonService;
 
-class TestCategoryService
+class TestCategoryService extends CommonService
 {
     protected $repository;
 
-    public function __construct(TestCategoryRepository $repository)
-    {
-        $this->repository = $repository;
+    public function connection(){
+        return new TestCategory();
     }
 
     // public function getByParams($request)
@@ -27,18 +27,11 @@ class TestCategoryService
     //     return $this->repository->findById($id);
     // }
 
-    public function save($data)
-    {
-        return $this->repository->save($data);
+    public function update(array $data,int $id){
+        return $this->connection()->query()->where('id',$id)->update($data);
     }
 
-    public function update($id, $data)
-    {
-        return $this->repository->update($id, $data);
-    }
-
-    public function delete($id)
-    {
-        return $this->repository->delete($id);
+    public function destroy($id){
+        return $this->connection()->query()->where('id',$id)->delete();
     }
 }
