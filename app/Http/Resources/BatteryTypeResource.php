@@ -17,7 +17,7 @@ class BatteryTypeResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'battery_type_name' => $this->battery_type_name,
+            'batteryTypeName' => $this->battery_type_name,
             'percentage' => $this->percentage,
         ];
     }
