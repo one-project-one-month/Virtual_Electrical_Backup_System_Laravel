@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BatteryTypeController;
 use App\Http\Controllers\Api\Test\TestCategoryController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Container\Attributes\Auth;
@@ -12,3 +13,5 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     Route::delete('auth/admin/logout', [AuthController::class, 'logout']);
 
 });
+
+Route::apiResource('/battery_types', BatteryTypeController::class);
