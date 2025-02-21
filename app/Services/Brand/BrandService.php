@@ -10,6 +10,11 @@ class BrandService extends CommonService
     public function connection(){
         return new Brand();
     }
+
+    public function getAllData ()
+    {
+        return $this->connection()->all();
+    }
     public function insert(array $data)
     {
         return $this->connection()->query()->create($data);
@@ -18,7 +23,7 @@ class BrandService extends CommonService
     {
         return $this->connection()->query()->where('id', $id)->first();
     }
-    public function update(array $data,int $id){
+    public function update(array $data, $id){
         return $this->connection()->query()->where('id',$id)->update($data);
     }
 
