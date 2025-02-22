@@ -14,6 +14,16 @@ class GeneratorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'model' => $this->model,
+            'watt' => $this->watt,
+            'fuelType' => $this->fuel_type,
+            'brand' => $this->brand_id,
+            'image' => $this->image,
+            'generatorPrice' => $this->generator_price,
+            'description' => $this->description
+        ];
     }
 }

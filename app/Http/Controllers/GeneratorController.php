@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGeneratorRequest;
+use App\Http\Resources\GeneratorResource;
+use App\Models\Generator;
+use App\Services\GeneratorService;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 
 class GeneratorController extends Controller
 {
+    use HttpResponses;
+    protected $generator;
+
+    public function __construct(GeneratorService $generator)
+    {
+        $this->generator = $generator;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -17,7 +30,7 @@ class GeneratorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGeneratorRequest $request)
     {
         //
     }

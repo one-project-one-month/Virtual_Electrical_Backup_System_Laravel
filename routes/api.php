@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Test\TestCategoryController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GeneratorController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,3 +13,5 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     Route::delete('auth/admin/logout', [AuthController::class, 'logout']);
 
 });
+
+Route::apiResource('generator', GeneratorController::class);
