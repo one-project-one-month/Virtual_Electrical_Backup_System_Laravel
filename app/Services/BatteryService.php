@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Battery;
 use Storage;
+use Str;
 use function PHPUnit\Framework\returnArgument;
 
 class BatteryService extends CommonService
@@ -25,7 +26,11 @@ class BatteryService extends CommonService
     public function insert(array $data)
     {
         if (isset($data['image'])) {
-            $data['image'] = $data['image']->store('images', 'public');
+            $image = $data['image'];
+            $image_name = time() . '_' . $image->getClientOriginalName();
+
+            $image_path = $image->storeAs('images', $image_name, 'public');
+            $data['image'] = $image_path;
         }
         return $this->connection()->create($data);
     }
@@ -34,10 +39,14 @@ class BatteryService extends CommonService
     {
         $battery = $this->connection()->findOrFail($id);
         if (isset($data['image'])) {
+            $image = $data['image'];
+            $image_name = time() . '_' . $image->getClientOriginalName();
+
             if ($battery->image) {
                 Storage::disk('public')->delete($battery->image);
             }
-            $data['image'] = $data['image']->store('images', 'public');
+            $image_path = $image->storeAs('images', $image_name, 'public');
+            $data['image'] = $image_path;
         }
 
         $battery->update($data);

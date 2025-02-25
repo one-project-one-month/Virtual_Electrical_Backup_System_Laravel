@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Api\BatteryController;
 use App\Http\Middleware\MustBeAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -10,7 +11,7 @@ use App\Http\Controllers\Api\Test\TestCategoryController;
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Container\Attributes\Auth;
-use App\Http\Controllers\Api\Test\TestCategoryController;
+// use App\Http\Controllers\Api\Test\TestCategoryController;
 use App\Http\Controllers\Api\InverterType\InverterTypeController;
 
 
@@ -20,16 +21,17 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('test-categories', TestCategoryController::class);
     Route::delete('auth/admin/logout', [AuthController::class, 'logout']);
 
-    Route::post('change/password',[AuthController::class,'changePassword']);
+    Route::post('change/password', [AuthController::class, 'changePassword']);
 
-    Route::prefix('admin/')->middleware(MustBeAdmin::class)->group(function(){
-        Route::apiResource('inverter-types',InverterTypeController::class);
+    Route::prefix('admin/')->middleware(MustBeAdmin::class)->group(function () {
+        Route::apiResource('inverter-types', InverterTypeController::class);
     });
 });
 
 
 
-});
+
 Route::apiResource('/brand', BrandController::class);
 
 Route::apiResource('/battery_types', BatteryTypeController::class);
+Route::apiResource('/battery', BatteryController::class);
