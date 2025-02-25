@@ -16,6 +16,6 @@ class BatteryType extends Model
 
     public function Batteries()
     {
-        $this->hasMany(Battery::class, 'id', 'battery_type_id');
+        return $this->hasMany(Battery::class, 'id', 'battery_type_id');
     }
 }

@@ -12,13 +12,16 @@ return new class extends Migration {
     {
         Schema::create('batteries', function (Blueprint $table) {
             $table->id();
-            $table->decimal('storage_amp', 5, 2);
-            $table->decimal('battery_volt', 5, 2);
+            $table->string('battery_name');
+            $table->float('storage_amp', 5, 2);
+            $table->float('battery_volt', 5, 2);
             $table->string('image');
             $table->string('description', 500);
+            $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('battery_type_id');
             $table->timestamps();
 
+            $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
             $table->foreign('battery_type_id')->references('id')->on('battery_types')->onDelete('cascade');
         });
     }

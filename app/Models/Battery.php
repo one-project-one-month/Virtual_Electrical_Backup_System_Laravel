@@ -12,10 +12,15 @@ class Battery extends Model
 
     protected $table = 'batteries';
 
-    protected $fillable = ['storage_amp', 'battery_volt', 'image', 'description', 'battery_type_id'];
+    protected $fillable = ['battery_name', 'storage_amp', 'battery_volt', 'image', 'description', 'brand_id', 'battery_type_id'];
 
     public function BatteryType()
     {
-        $this->belongsTo(BatteryType::class, 'battery_type_id', 'id');
+        return $this->belongsTo(BatteryType::class, 'battery_type_id', 'id');
+    }
+
+    public function Brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 }

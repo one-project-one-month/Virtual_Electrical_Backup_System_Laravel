@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BatteryController;
 use App\Http\Controllers\Api\BatteryTypeController;
 use App\Http\Controllers\Api\Brand\BrandController;
 use App\Http\Controllers\Api\Test\TestCategoryController;
@@ -16,3 +17,4 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
 Route::apiResource('/brand', BrandController::class);
 
 Route::apiResource('/battery_types', BatteryTypeController::class);
+Route::apiResource('/battery', BatteryController::class);
