@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('battery_types', function (Blueprint $table) {
             $table->id();
             $table->string('battery_type_name');
-            $table->decimal('percentage', 5, 2);
+            $table->float('percentage', 5, 2);
             $table->timestamps();
         });
     }
