@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Brand\BrandController;
 use App\Http\Controllers\Api\Test\TestCategoryController;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\GeneratorController;
 use Illuminate\Container\Attributes\Auth;
 // use App\Http\Controllers\Api\Test\TestCategoryController;
 use App\Http\Controllers\Api\InverterType\InverterTypeController;
@@ -26,6 +27,8 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin/')->middleware(MustBeAdmin::class)->group(function () {
         Route::apiResource('inverter-types', InverterTypeController::class);
     });
+
+    Route::apiResource('/generators', GeneratorController::class);
 });
 
 
@@ -35,3 +38,4 @@ Route::apiResource('/brand', BrandController::class);
 
 Route::apiResource('/battery_types', BatteryTypeController::class);
 Route::apiResource('/battery', BatteryController::class);
+
