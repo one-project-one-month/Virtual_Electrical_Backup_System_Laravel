@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBatteryTypeRequest extends FormRequest
+class UpdateBatteryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,13 @@ class StoreBatteryTypeRequest extends FormRequest
     {
         return [
             //
-            'battery_type_name' => 'required|string|max:255',
-            'percentage' => 'required|numeric|min:0',
+            'battery_name' => 'sometimes|string|max:255',
+            'storage_amp' => 'sometimes|numeric|min:0',
+            'battery_volt' => 'sometimes|numeric|min:0',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'sometimes|string|max:500',
+            'brand_id' => 'sometimes|integer|exists:brand,id',
+            'battery_type_id' => 'sometimes|integer|exists:battery_types,id',
         ];
     }
 }

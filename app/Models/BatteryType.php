@@ -13,4 +13,9 @@ class BatteryType extends Model
     protected $table = 'battery_types';
 
     protected $fillable = ['battery_type_name', 'percentage'];
+
+    public function Batteries()
+    {
+        return $this->hasMany(Battery::class, 'id', 'battery_type_id');
+    }
 }

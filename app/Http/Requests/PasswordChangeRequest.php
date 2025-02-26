@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBatteryTypeRequest extends FormRequest
+class PasswordChangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class StoreBatteryTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            'battery_type_name' => 'required|string|max:255',
-            'percentage' => 'required|numeric|min:0',
+            'current_password'      => 'required',
+            'new_password'          => 'required|min:8',
+            'password_confirmation' => 'required|min:8|same:new_password',
         ];
     }
 }

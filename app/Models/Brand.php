@@ -15,4 +15,9 @@ class Brand extends Model
     ];
 
     protected $table = 'brand';
+
+    public function Batteries()
+    {
+        return $this->hasMany(Battery::class, 'brand_id', 'id');
+    }
 }

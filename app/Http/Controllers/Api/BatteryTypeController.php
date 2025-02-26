@@ -28,7 +28,11 @@ class BatteryTypeController extends Controller
     {
         //
         $battery_type_list = BatteryTypeResource::collection($this->batteryTypeService->getAllData());
-        return $this->success(true, $battery_type_list, 'success', 200);
+        if ($battery_type_list) {
+            return $this->success(true, $battery_type_list, 'Successfully retrieved', 200);
+        } else {
+            return $this->fail(false, null, 'data retrieve failed', 404);
+        }
     }
 
     /**
@@ -62,7 +66,11 @@ class BatteryTypeController extends Controller
     {
         //
         $battery_type = BatteryTypeResource::make($this->batteryTypeService->getDataById($id));
-        return $this->success(true, $battery_type, "successfully retrieved", 200);
+        if ($battery_type) {
+            return $this->success(true, $battery_type, 'Successfully retrieved', 200);
+        } else {
+            return $this->fail(false, null, 'data retrieve failed', 404);
+        }
 
     }
 
@@ -72,6 +80,12 @@ class BatteryTypeController extends Controller
     public function edit(string $id)
     {
         //
+        $battery_type = BatteryTypeResource::make($this->batteryTypeService->getDataById($id));
+        if ($battery_type) {
+            return $this->success(true, $battery_type, 'Successfully retrieved', 200);
+        } else {
+            return $this->fail(false, null, 'data retrieve failed', 404);
+        }
     }
 
     /**
@@ -102,6 +116,10 @@ class BatteryTypeController extends Controller
     {
         //
         $battery_type = $this->batteryTypeService->destroy($id);
-        return $this->success(true, $battery_type, 'successfully deleted', 200);
+        if ($battery_type) {
+            return $this->success(true, $battery_type, "Successfully deleted", 200);
+        } else {
+            return $this->fail(false, null, "Delete Failed", 404);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Traits\HttpResponses;
@@ -12,6 +13,7 @@ use App\Http\Resources\LoginResorce;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\SigninResource;
 use Illuminate\Notifications\Notifiable;
+use App\Http\Requests\PasswordChangeRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AuthController extends Controller
@@ -46,4 +48,27 @@ class AuthController extends Controller
 
         return $this->success("success",null,"Logout success",200);
     }
+
+    public function changePassword(PasswordChangeRequest $request){
+        $user=auth()->user();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'message' => 'Current password is incorrect',
+                'status' => 'error',
+            ], 400);
+        }
+
+        $user->password=Hash::make($request->new_password);
+        $user->save;
+        $user->currentAccessToken()->delete();
+
+        return response()->json([
+            "status"  => true,
+            'statusCode'=>200,
+            "message" => "Password Changed Successfully. Login again",
+        ], 200);
+
+
+    }
+
 }
