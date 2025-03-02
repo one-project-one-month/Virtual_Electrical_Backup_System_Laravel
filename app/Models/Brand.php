@@ -14,7 +14,7 @@ class Brand extends Model
         'name',
     ];
 
-    protected $table = 'brand';
+    protected $table = 'brands';
 
     public function Batteries()
     {

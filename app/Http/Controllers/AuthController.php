@@ -28,29 +28,31 @@ class AuthController extends Controller
         $this->user = $user;
     }
 
-    public function signin(SigninRequest $request){
+    public function signin(SigninRequest $request)
+    {
         $validatedData = $request->validated();
 
         $user = $this->user->getUserByEmail($request->email);
 
-        if(!$user || !Hash::check($validatedData["password"],$user->password)){
-            return $this->fail('authentication-failed',null,"Credential not matched",401);
+        if (!$user || !Hash::check($validatedData["password"], $user->password)) {
+            return $this->fail('authentication-failed', null, "Credential not matched", 401);
         }
 
-        return $this->success("success",[SigninResource::make($user),"token"=>$user->createToken(time())->plainTextToken],"Login Successful",200);
-
+        return $this->success("success", [SigninResource::make($user), "token" => $user->createToken(time())->plainTextToken], "Login Successful", 200);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->user()->tokens()->delete();
 
         $request->user()->currentAccessToken()->delete();
 
-        return $this->success("success",null,"Logout success",200);
+        return $this->success("success", null, "Logout success", 200);
     }
 
-    public function changePassword(PasswordChangeRequest $request){
-        $user=auth()->user();
+    public function changePassword(PasswordChangeRequest $request)
+    {
+        $user = auth()->user;
         if (!Hash::check($request->current_password, $user->password)) {
             return response()->json([
                 'message' => 'Current password is incorrect',
@@ -58,17 +60,14 @@ class AuthController extends Controller
             ], 400);
         }
 
-        $user->password=Hash::make($request->new_password);
+        $user->password = Hash::make($request->new_password);
         $user->save;
         $user->currentAccessToken()->delete();
 
         return response()->json([
             "status"  => true,
-            'statusCode'=>200,
+            'statusCode' => 200,
             "message" => "Password Changed Successfully. Login again",
         ], 200);
-
-
     }
-
 }
