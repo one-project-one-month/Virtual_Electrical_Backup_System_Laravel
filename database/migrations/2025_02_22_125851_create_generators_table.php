@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('model');
             $table->integer('watt');
             $table->string('fuel_type');
-            $table->foreignId('brand_id')->references('id')->on('brand');
+            $table->foreignId('brand_id')->references('id')->on('brands');
             $table->string('image');
             $table->float('generator_price');
             $table->text('description');

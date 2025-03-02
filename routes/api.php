@@ -24,18 +24,14 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
 
     Route::post('change/password', [AuthController::class, 'changePassword']);
 
-    Route::prefix('admin/')->middleware(MustBeAdmin::class)->group(function () {
-        Route::apiResource('inverter-types', InverterTypeController::class);
-    });
+    Route::prefix('admin/')->middleware(MustBeAdmin::class)->group(function () {});
+    Route::apiResource('inverter-types', InverterTypeController::class);
 
     Route::apiResource('/generators', GeneratorController::class);
+
+
+    Route::apiResource('/brand', BrandController::class);
+
+    Route::apiResource('/battery_types', BatteryTypeController::class);
+    Route::apiResource('/battery', BatteryController::class);
 });
-
-
-
-
-Route::apiResource('/brand', BrandController::class);
-
-Route::apiResource('/battery_types', BatteryTypeController::class);
-Route::apiResource('/battery', BatteryController::class);
-

@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('battery_type_id');
             $table->timestamps();
 
-            $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->foreign('battery_type_id')->references('id')->on('battery_types')->onDelete('cascade');
         });
     }
