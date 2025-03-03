@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Traits\HttpResponses;
 use Laravel\Sanctum\HasApiTokens;
-use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SigninRequest;
-use App\Http\Resources\LoginResorce;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\SigninResource;
 use Illuminate\Notifications\Notifiable;
@@ -38,7 +36,8 @@ class AuthController extends Controller
             return $this->fail('authentication-failed', null, "Credential not matched", 401);
         }
 
-        return $this->success("success", [SigninResource::make($user), "token" => $user->createToken(time())->plainTextToken], "Login Successful", 200);
+        return $this->success("success",["user" => SigninResource::make($user),"token"=>$user->createToken(time())->plainTextToken],"Login Successful",200);
+
     }
 
     public function logout(Request $request)
@@ -50,9 +49,14 @@ class AuthController extends Controller
         return $this->success("success", null, "Logout success", 200);
     }
 
+<<<<<<< Updated upstream
     public function changePassword(PasswordChangeRequest $request)
     {
         $user = auth()->user;
+=======
+    public function changePassword(PasswordChangeRequest $request){
+        $user=auth()->user;
+>>>>>>> Stashed changes
         if (!Hash::check($request->current_password, $user->password)) {
             return response()->json([
                 'message' => 'Current password is incorrect',

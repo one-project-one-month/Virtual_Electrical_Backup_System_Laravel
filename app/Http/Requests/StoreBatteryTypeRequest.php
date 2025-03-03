@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreBatteryTypeRequest extends FormRequest
 {
@@ -26,5 +28,14 @@ class StoreBatteryTypeRequest extends FormRequest
             'battery_type_name' => 'required|string|max:255',
             'percentage' => 'required|numeric|min:0',
         ];
+    }
+
+    public function failedValidation(Validator $validator){
+        throw new HttpResponseException(response()->json([
+            'status' => 'battery-type-fail',
+            'status' => '422',
+            'message' => 'Validation Error',
+            'data' => $validator->errors()
+        ]));
     }
 }
