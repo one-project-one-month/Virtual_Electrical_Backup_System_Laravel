@@ -49,14 +49,8 @@ class AuthController extends Controller
         return $this->success("success", null, "Logout success", 200);
     }
 
-<<<<<<< Updated upstream
-    public function changePassword(PasswordChangeRequest $request)
-    {
-        $user = auth()->user;
-=======
     public function changePassword(PasswordChangeRequest $request){
         $user=auth()->user;
->>>>>>> Stashed changes
         if (!Hash::check($request->current_password, $user->password)) {
             return response()->json([
                 'message' => 'Current password is incorrect',
