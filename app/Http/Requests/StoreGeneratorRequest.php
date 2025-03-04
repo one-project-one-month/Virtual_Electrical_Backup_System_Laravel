@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreGeneratorRequest extends FormRequest
 {
@@ -31,5 +33,14 @@ class StoreGeneratorRequest extends FormRequest
             'generator_price' => 'required',
             'description' => 'required'
         ];
+    }
+
+    public function failedValidation(Validator $validator){
+        throw new HttpResponseException(response()->json([
+            'status' => 'generator-fail',
+            'status' => '422',
+            'message' => 'Validation Error',
+            'data' => $validator->errors()
+        ]));
     }
 }
