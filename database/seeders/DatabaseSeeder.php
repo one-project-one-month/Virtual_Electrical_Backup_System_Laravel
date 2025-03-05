@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call(BatteryTypeSeeder::class);
+        $this->call(BrandSeeder::class);
+        $this->call(GeneratorSeeder::class);
+        $this->call(InverterTypeSeeder::class);
         $this->call(BatterySeeder::class);
 
         User::factory()->create([
