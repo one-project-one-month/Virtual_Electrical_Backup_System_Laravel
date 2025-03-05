@@ -21,6 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             $response['statusCode'] = 401;
             $response['message'] = 'Unauthorized';
-            return response()->json(['error' => "unauthorized", 'message' => 'Unauthorized user!']);
+            return response()->json(['status'=> 401,'error' => "unauthorized", 'message' => 'Unauthorized user!']);
         });
     })->create();

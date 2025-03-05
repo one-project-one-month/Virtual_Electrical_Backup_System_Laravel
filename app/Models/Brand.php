@@ -20,4 +20,9 @@ class Brand extends Model
     {
         return $this->hasMany(Battery::class, 'brand_id', 'id');
     }
+
+    public function PowerStations()
+    {
+        return $this->hasMany(PowerStation::class, 'brand_id', 'id');
+    }
 }

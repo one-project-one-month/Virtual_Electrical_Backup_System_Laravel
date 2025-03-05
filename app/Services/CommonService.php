@@ -12,7 +12,7 @@ abstract class CommonService
 
     public function getDataById($id)
     {
-        return $this->connection()->query()->where('', $id)->first();
+        return $this->connection()->query()->where('id', $id)->first();
     }
 
 
