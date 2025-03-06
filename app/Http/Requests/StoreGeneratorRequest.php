@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreBatteryTypeRequest extends FormRequest
+class StoreGeneratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,20 @@ class StoreBatteryTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            'battery_type_name' => 'required|string|max:255',
-            'percentage' => 'required|numeric|min:0',
+            'name' => 'required|string',
+            'model' => 'required|string',
+            'watt' => 'required|integer',
+            'fuel_type' => 'required|string',
+            'brand_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'generator_price' => 'required',
+            'description' => 'required'
         ];
     }
 
     public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
-            'status' => 'battery-type-fail',
+            'status' => 'generator-fail',
             'status' => '422',
             'message' => 'Validation Error',
             'data' => $validator->errors()

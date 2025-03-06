@@ -28,7 +28,7 @@ class BatteryTypeService extends CommonService
 
     public function update(array $data, $id)
     {
-        return $this->connection()->where('id', $id)->update($data);
+        return $this->connection()->query()->where('id', $id)->update($data);
     }
 
     public function destroy($id)

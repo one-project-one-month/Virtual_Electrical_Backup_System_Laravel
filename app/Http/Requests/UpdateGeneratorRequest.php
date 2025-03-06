@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreBatteryTypeRequest extends FormRequest
+class UpdateGeneratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,14 @@ class StoreBatteryTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            'battery_type_name' => 'required|string|max:255',
-            'percentage' => 'required|numeric|min:0',
+            'name' => 'required|string',
+            'model' => 'required|string',
+            'watt' => 'required|integer',
+            'fuel_type' => 'required|string',
+            'brand_id' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'generator_price' => 'required',
+            'description' => 'required'
         ];
     }
 
