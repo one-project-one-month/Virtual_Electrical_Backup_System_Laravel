@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('image');
             $table->text('description');
             $table->timestamps();
-            $table->foreign('inverter_type_id')->references('id')->on('inverter_type')->onDelete('cascade');
-            $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
+            $table->foreign('inverter_type_id')->references('id')->on('inverter_types')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });
     }
 
