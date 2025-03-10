@@ -14,7 +14,9 @@ use App\Http\Controllers\Api\GeneratorController;
 use Illuminate\Container\Attributes\Auth;
 // use App\Http\Controllers\Api\Test\TestCategoryController;
 use App\Http\Controllers\Api\InverterType\InverterTypeController;
+use App\Http\Controllers\InverterController;
 use App\Http\Controllers\TestingController;
+
 
 Route::post('v1/auth/admin/signin', [AuthController::class, 'signin']);
 
@@ -34,6 +36,8 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('/battery_types', BatteryTypeController::class);
     Route::apiResource('/battery', BatteryController::class);
+
+    Route::apiResource('/inverters', InverterController::class);
 });
 
 Route::post('/calculate', [TestingController::class, 'calculate']);
