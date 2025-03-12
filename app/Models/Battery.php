@@ -12,7 +12,7 @@ class Battery extends Model
 
     protected $table = 'batteries';
 
-    protected $fillable = ['battery_name', 'storage_amp', 'battery_volt', 'image', 'description', 'brand_id', 'battery_type_id'];
+    protected $fillable = ['battery_name', 'storage_amp', 'battery_volt', 'battery_price', 'image', 'description', 'brand_id', 'battery_type_id'];
 
     public function BatteryType()
     {

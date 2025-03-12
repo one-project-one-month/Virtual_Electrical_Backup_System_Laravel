@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GeneratorSeeder::class);
         $this->call(InverterTypeSeeder::class);
         $this->call(BatterySeeder::class);
+        $this->call(InverterSeeder::class);
 
         User::factory()->create([
             'name' => 'admin',

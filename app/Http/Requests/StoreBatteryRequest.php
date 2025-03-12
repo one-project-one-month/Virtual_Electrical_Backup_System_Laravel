@@ -28,6 +28,7 @@ class StoreBatteryRequest extends FormRequest
             'battery_name' => 'required|string|max:255',
             'storage_amp' => 'required|numeric|min:0',
             'battery_volt' => 'required|numeric|min:0',
+            'battery_price' => 'required|numeric|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string|max:500',
             'brand_id' => 'required|integer|exists:brand,id',

@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('battery_name');
             $table->float('storage_amp', 5, 2);
             $table->float('battery_volt', 5, 2);
+            $table->float('battery_price');
             $table->string('image');
             $table->string('description', 500);
             $table->unsignedBigInteger('brand_id');
