@@ -61,7 +61,7 @@ class BrandController extends Controller
     {
         //
         $brand = BrandResource::make($this->brandService->getDataById($id));
-        
+
         return $this->success(true, $brand, "Successfully Retrieved", 200);
     }
 
@@ -74,7 +74,7 @@ class BrandController extends Controller
         $validateData = $brandRequest->validated();
         $brand = $this->brandService->update($validateData, $id);
         $resBrand = BrandResource::make ($this->brandService->getDataById($id));
-        
+
         if ($brand) {
             return $this->success(true, $resBrand, 'Successfully Updated', 200);
         } else {
