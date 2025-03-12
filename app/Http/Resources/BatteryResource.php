@@ -26,7 +26,7 @@ class BatteryResource extends JsonResource
             'image' => $this->image ? Storage::url($this->image) : null,
             'description' => $this->description,
             'brand' => BrandResource::make($this->brand),
-            'battery_type' => BatteryTypeResource::make($this->batterytype),
+            'batteryType' => BatteryTypeResource::make($this->batterytype),
         ];
     }
 }

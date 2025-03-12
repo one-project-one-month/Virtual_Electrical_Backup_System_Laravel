@@ -13,11 +13,11 @@ class SetupService extends CommonService
 
     public function calculateTotalPrice($inverter_price, $battery_price)
     {
-        if($inverter_price || $battery_price) {
+        if(!$inverter_price || !$battery_price) {
             return null;
         }
 
-        return $inverter_price + $battery_price;
+        return floatval($inverter_price) + $battery_price;
     }
 
     public function getProductById($id)

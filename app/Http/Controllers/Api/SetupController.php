@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SetupRequest;
 use App\Http\Resources\SetupResource;
 use App\Models\Battery;
+use App\Models\Inverter;
 use App\Models\Setup;
 use App\Services\SetupService;
 use App\Traits\HttpResponses;
@@ -66,7 +67,7 @@ class SetupController extends Controller
      */
     public function show(string $id)
     {
-        $setup = $this->setup->getDataById($id);
+        $setup = $this->setup->getProductById($id);
         if(!$setup) {
             return $this->fail('error', null, 'Setup not found', 404);
         }

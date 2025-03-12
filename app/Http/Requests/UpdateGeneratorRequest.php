@@ -37,7 +37,7 @@ class UpdateGeneratorRequest extends FormRequest
 
     public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
-            'status' => 'battery-type-fail',
+            'status' => 'generator-fail',
             'status' => '422',
             'message' => 'Validation Error',
             'data' => $validator->errors()
