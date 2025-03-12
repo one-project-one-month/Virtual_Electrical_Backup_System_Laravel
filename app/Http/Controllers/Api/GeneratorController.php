@@ -128,8 +128,12 @@ class GeneratorController extends Controller
             $this->generator->deleteFile($path);
         }
 
-        $this->generator->destroy($id);
+        $result = $this->generator->destroy($id);
 
-        return $this->success('success', null, 'Generator deleted successfully', 200);
+        if($result) {
+            return $this->success('success', null, 'Generator deleted successfully', 200);
+        }
+
+        return $this->fail('error', null, 'Failed to delete generator', 400);
     }
 }

@@ -22,6 +22,7 @@ class BatteryResource extends JsonResource
             'batteryName' => $this->battery_name,
             'storageAmp' => $this->storage_amp,
             'batteryVolt' => $this->battery_volt,
+            'batteryPrice' => $this->battery_price,
             'image' => $this->image ? Storage::url($this->image) : null,
             'description' => $this->description,
             'brand' => BrandResource::make($this->brand),
