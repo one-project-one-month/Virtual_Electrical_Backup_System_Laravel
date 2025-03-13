@@ -26,7 +26,14 @@ class GeneratorController extends Controller
      */
     public function index()
     {
-        $generators = Generator::with('brand')->get();
+        $generators = Generator::when(request('watt'), function($query) {
+                        $query->whereBetween('watt', [request('watt')*0.9, request('watt')*1.1]);
+                    })
+                    ->when(request('price'), function($query) {
+                        $query->whereBetween('generator_price', [request('price')*0.9, request('price')*1.1]);
+                    })
+                    ->with('brand')->get();
+
         return $this->success('success', GeneratorResource::collection($generators), 'Generators retrieved successfully', 200);
     }
 
