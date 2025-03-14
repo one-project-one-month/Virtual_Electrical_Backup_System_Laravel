@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Api\BatteryController;
+use App\Http\Controllers\Api\ElectricalAccessory\ElectricalAccessoryController;
 use App\Http\Middleware\MustBeAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/inverters', InverterController::class);
 
     Route::apiResource('/setups', SetupController::class);
+    Route::apiResource('electrical-accessories',ElectricalAccessoryController::class);
 });
 
 Route::post('/calculate', [TestingController::class, 'calculate']);
