@@ -2,24 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CalculationRequest;
+use App\Services\BatteryService;
+use App\Services\InverterService;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use App\Http\Resources\CalculationResource;
 
 class TestingController extends Controller
 {
     //
-    public function calculate()
+    use HttpResponses;
+    protected $batteryService;
+    protected $inverterService;
+
+    public function __construct(BatteryService $batteryService, InverterService $inverterService)
+    {
+        $this->batteryService = $batteryService;
+        $this->inverterService = $inverterService;
+    }
+
+    public function calculate(CalculationRequest $request)
     {
         try {
-            $battery_capacity = 200;
-            $inverter_efficiency = 0.8;
-            $inverter_watt = 1500;
-            $battery_volt = 24;
-            $battery_efficiency = 0.8;
-            $watt = 250;
+            $battery_id = $request->battery_id;
+            $inverter_id = $request->inverter_id;
+
+            $battery = $this->batteryService->getDataById($battery_id);
+            $inverter = $this->inverterService->getInverterById($inverter_id);
+
+            $battery_capacity = $battery->storage_amp;
+            $battery_volt = $battery->battery_volt;
+            $battery_efficiency = $battery->BatteryType->percentage;
+
+            $inverter_efficiency = $inverter->inverterType->efficiency;
+            $inverter_watt = $inverter->watt;
+
+            $watt = $request->watt;
 
             list($hours, $minutes) = $this->calculateRuntime($battery_capacity, $inverter_efficiency, $inverter_watt, $battery_volt, $battery_efficiency, $watt);
 
-            return response()->json(['runtime' => "$hours hours $minutes minutes"]);
+            // return response()->json(['runtime' => "$hours hours $minutes minutes"]);
+
+            $return_data = CalculationResource::make((object) ['hours' => $hours, 'minutes' => $minutes]);
+
+            return $this->success(true, $return_data, 'success', 200);
+
+
         } catch (\Exception $e) {
             // Catch any exception and return a meaningful error message
             return response()->json(['error' => 'An error occurred during calculation: ' . $e->getMessage()], 500);

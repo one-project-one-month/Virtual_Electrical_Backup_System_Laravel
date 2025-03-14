@@ -31,12 +31,13 @@ class StoreBatteryRequest extends FormRequest
             'battery_price' => 'required|numeric|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string|max:500',
-            'brand_id' => 'required|integer|exists:brand,id',
+            'brand_id' => 'required|integer|exists:brands,id',
             'battery_type_id' => 'required|integer|exists:battery_types,id',
         ];
     }
 
-    public function failedValidation(Validator $validator){
+    public function failedValidation(Validator $validator)
+    {
         throw new HttpResponseException(response()->json([
             'status' => 'battery-fail',
             'status' => '422',
