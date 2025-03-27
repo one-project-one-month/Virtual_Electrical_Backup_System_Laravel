@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateGeneratorRequest extends FormRequest
+class SetupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,23 +24,17 @@ class UpdateGeneratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'model' => 'required|string',
-            'watt' => 'required|integer',
-            'fuel_type' => 'required|string',
-            'brand_id' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'generator_price' => 'required',
-            'description' => 'required'
+            'inverter_id' => 'required|exists:inverters,id',
+            'battery_id' => 'required|exists:batteries,id',
         ];
     }
 
     public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'status' => 'generator-fail',
-            'status' => '422',
-            'message' => 'Validation Error',
+        throw new HttpResponseException( response()->json([
+            'success' => false,
+            'message' => 'Validation errors',
             'data' => $validator->errors()
         ]));
     }
+
 }

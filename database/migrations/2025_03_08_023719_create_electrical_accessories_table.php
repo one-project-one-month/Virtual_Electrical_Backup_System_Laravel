@@ -4,16 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('inverter_types', function (Blueprint $table) {
+        Schema::create('electrical_accessories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->float('efficiency', 5, 2);
+            $table->string('device_name');
+            $table->unsignedBigInteger('watt');
+            $table->boolean('pure_sine_wave')->default(false);
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('inverter_types');
+        Schema::dropIfExists('electrical_accessories');
     }
 };

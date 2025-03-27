@@ -26,7 +26,13 @@ class GeneratorController extends Controller
      */
     public function index()
     {
-        $generators = Generator::with('brand')->get();
+        $generators = Generator::when(request('watt'), function($query) {
+                        $query->whereBetween('watt', [request('watt')*0.9, request('watt')*1.1]);
+                    })
+                    ->when(request('price'), function($query) {
+                        $query->whereBetween('generator_price', [request('price')*0.9, request('price')*1.1]);
+                    })
+                    ->with('brand')->get();
 
         return $this->success('success', GeneratorResource::collection($generators), 'Generators retrieved successfully', 200);
     }
@@ -52,12 +58,10 @@ class GeneratorController extends Controller
 
         $generator = $this->generator->insert($validated);
 
-        if($generator) {
-            return $this->success('success', GeneratorResource::make($generator), 'Generator created successfully', 201);
-        }
-        else {
+        if(!$generator) {
             return $this->fail('error', null, 'Failed to create generator.', 400);
         }
+        return $this->success('success', GeneratorResource::make($generator), 'Generator created successfully', 201);
 
     }
 
@@ -70,7 +74,6 @@ class GeneratorController extends Controller
         if(!$generator) {
             return $this->fail('error', null, 'Generator not found', 404);
         }
-
         $generator->load('brand');
 
         return $this->success('success', GeneratorResource::make($generator), 'Generator retrieved successfully', 200);
@@ -82,7 +85,6 @@ class GeneratorController extends Controller
     public function update(UpdateGeneratorRequest $request, string $id)
     {
         $validated = $request->validated();
-
         $generator = $this->generator->getProductById($id);
 
         if($request->hasFile('image')) {
@@ -101,7 +103,6 @@ class GeneratorController extends Controller
         } else {
             $validated['image'] = $generator->image;
         }
-
         $this->generator->update($id, $validated);
 
         $updatedGenerator = $this->generator->getProductById($id);
@@ -122,14 +123,16 @@ class GeneratorController extends Controller
         if(!$generator) {
             return $this->fail('error', null, 'Generator not found', 404);
         }
-
         if($generator->image) {
             $path = 'images/generators/'.$generator->image;
             $this->generator->deleteFile($path);
         }
 
-        $this->generator->destroy($id);
+        $result = $this->generator->destroy($id);
+        if($result) {
+            return $this->success('success', null, 'Generator deleted successfully', 200);
+        }
 
-        return $this->success('success', null, 'Generator deleted successfully', 200);
+        return $this->fail('error', null, 'Failed to delete generator', 400);
     }
 }

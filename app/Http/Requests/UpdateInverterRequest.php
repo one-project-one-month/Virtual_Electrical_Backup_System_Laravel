@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateGeneratorRequest extends FormRequest
+class UpdateInverterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,22 @@ class UpdateGeneratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'model' => 'required|string',
-            'watt' => 'required|integer',
-            'fuel_type' => 'required|string',
-            'brand_id' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'generator_price' => 'required',
-            'description' => 'required'
+            'watt' => 'sometimes|required|integer|min:1',
+            'inverter_type_id' => 'sometimes|required|exists:inverter_types,id',
+            'brand_id' => 'sometimes|required|exists:brands,id',
+            'wave_type' => 'sometimes|required|string',
+            'model' => 'sometimes|required|string',
+            'inverter_volt' => 'sometimes|required|numeric',
+            'compatible_battery' => 'sometimes|required|string',
+            'inverter_price' => 'sometimes|required|decimal:2,10',
+            'image' => 'sometimes|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'sometimes|required|string',
         ];
     }
 
     public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
-            'status' => 'generator-fail',
+            'status' => 'inverter-update-fail',
             'status' => '422',
             'message' => 'Validation Error',
             'data' => $validator->errors()

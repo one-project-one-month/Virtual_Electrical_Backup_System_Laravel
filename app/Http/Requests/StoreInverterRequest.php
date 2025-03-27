@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreBatteryRequest extends FormRequest
+class StoreInverterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,21 +25,22 @@ class StoreBatteryRequest extends FormRequest
     {
         return [
             //
-            'battery_name' => 'required|string|max:255',
-            'storage_amp' => 'required|numeric|min:0',
-            'battery_volt' => 'required|numeric|min:0',
-            'battery_price' => 'required|numeric|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string|max:500',
-            'brand_id' => 'required|integer|exists:brands,id',
-            'battery_type_id' => 'required|integer|exists:battery_types,id',
+            'watt' => 'required|integer|min:1',
+            'inverter_type_id' => 'required|exists:inverter_types,id',
+            'brand_id' => 'required|exists:brands,id',
+            'wave_type' => 'required|string',
+            'model' => 'required|string',
+            'inverter_volt' => 'required|numeric',
+            'compatible_battery' => 'required|string',
+            'inverter_price' => 'required|decimal:2,10',
+            'image' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
+            'description' => 'required|string',
         ];
     }
 
-    public function failedValidation(Validator $validator)
-    {
+    public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
-            'status' => 'battery-fail',
+            'status' => 'inverter-fail',
             'status' => '422',
             'message' => 'Validation Error',
             'data' => $validator->errors()
